@@ -1,4 +1,4 @@
-node_modules
-.vscode
-src
+node_modules/
+.vscode/
+src/
 package-lock.json
