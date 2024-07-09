@@ -26,11 +26,14 @@ export async function crop(done) {
   if (!fs.existsSync(outputFolder)) {
     fs.mkdirSync(outputFolder, { recursive: true });
   }
-  const images = fs.readdirSync(inputFolder).filter((file) => {
+
+  // Retornamos todos los archivos de la extancion jpg
+  const jpg = fs.readdirSync(inputFolder).filter((file) => {
     return /\.(jpg)$/i.test(path.extname(file));
   });
   try {
-    images.forEach((file) => {
+    //Recorremos el arreglo pasa procesar todos los jpg
+    jpg.forEach((file) => {
       const inputFile = path.join(inputFolder, file);
       const baseName = path.basename(file, path.extname(file));
       const extName = path.extname(file);
@@ -53,22 +56,28 @@ export async function crop(done) {
       //1920
       sharp(inputFile)
         .resize(width[0], height[0], {
-          position: "centre",
+          max: true,
           background: { r: 255, g: 255, b: 255, alpha: 0.8 },
+          progressive: true,
+          withoutEnlargement: false,
         })
         .toFile(outputFile);
       //1280
       sharp(inputFile)
         .resize(width[1], height[1], {
-          position: "centre",
+          max: true,
           background: { r: 255, g: 255, b: 255, alpha: 0.8 },
+          progressive: true,
+          withoutEnlargement: false,
         })
         .toFile(outputFile1);
       //480
       sharp(inputFile)
         .resize(width[2], height[2], {
-          position: "centre",
+          max: true,
           background: { r: 255, g: 255, b: 255, alpha: 0.8 },
+          progressive: true,
+          withoutEnlargement: false,
         })
         .toFile(outputFile2);
 
@@ -117,13 +126,22 @@ function procesarImagenes(file, outputSubDir) {
   const baseName = path.basename(file, path.extname(file));
   const extName = path.extname(file);
   const outputFile = path.join(outputSubDir, `${baseName}${extName}`);
+  const outputFilepng = path.join(outputSubDir, `${baseName}.png`);
   const outputFileWebp = path.join(outputSubDir, `${baseName}.webp`);
   const outputFileavif = path.join(outputSubDir, `${baseName}.avif`);
 
-  const options = { quality: 80 };
+  //Indicamos las opciones de compecio
+  const options = {
+    jpeg: { quality: 80 }, //Ajusta de 0-100
+    webp: { quality: 80 }, //Ajusta de 0-100
+    png: { compressionLevel: 8 }, //Ajusta de 0-10
+    avif: { quality: 60 }, // //Ajusta de 0-100
+  };
+  //Procesa la imagen y la guarda en el directerio desttino
   sharp(file).jpeg(options).toFile(outputFile);
+  sharp(file).png(options).toFile(outputFilepng);
   sharp(file).webp(options).toFile(outputFileWebp);
-  sharp(file).avif().toFile(outputFileavif);
+  sharp(file).avif(options).toFile(outputFileavif);
 }
 /**
  * Funcion que se encarga de compilar el js
