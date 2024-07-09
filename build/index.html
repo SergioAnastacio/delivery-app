@@ -27,6 +27,47 @@
         >
       </nav>
     </header>
+    <section class="contenedor formulario">
+      <div class="formulario__grid">
+        <div class="formulario__contenido">
+          <h2 class="formulario__heading">
+            Encuentra y pide comida de tu restaurante favorito
+          </h2>
+          <form action="" class="formulario__buscar">
+            <div class="formulario__campo">
+              <label for="restaurant" class="formulario__label"
+                >Restaurant</label
+              >
+              <input
+                id="restaurant"
+                class="formulario__input"
+                placeholder="Tacos Mexico"
+                type="text"
+              />
+            </div>
+            <!--end field-->
+            <div class="formulario__campo">
+              <label for="platillo" class="formulario__label">Platilo</label>
+              <input
+                id="platillo"
+                class="formulario__input"
+                placeholder="hamburguesa,ensalada,fatush,pizza,"
+                type="text"
+              />
+            </div>
+            <!--end field-->
+            <input class="formulario__submit" type="submit" value="Buscar" />
+          </form>
+        </div>
+        <div class="formulario__imagen--contenedor">
+          <img
+            class="formulario__imagen"
+            src="./img/dibujo_repartidor.svg"
+            alt="Repartidor"
+          />
+        </div>
+      </div>
+    </section>
     <!--Scripts-->
     <script src="./js/app.js"></script>
     <script src="./js/modernizer.js"></script>
